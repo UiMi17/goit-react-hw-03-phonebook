@@ -11,6 +11,21 @@ export class App extends Component {
     filter: '',
   };
 
+  componentDidMount() {
+    const USER_CONTACTS = JSON.parse(localStorage.getItem('user_contacts'));
+    if (USER_CONTACTS) {
+      this.setState({ contacts: USER_CONTACTS });
+    }
+  }
+  componentDidUpdate() {
+    if (!this.state.filter) {
+      localStorage.setItem(
+        'user_contacts',
+        JSON.stringify(this.state.contacts)
+      );
+    }
+  }
+
   createContact = ev => {
     const { contacts } = this.state;
     const { name, number } = ev.target.elements;
